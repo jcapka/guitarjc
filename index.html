@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Guitar Practice</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">  
+        <script type="text/javascript">
+        let notes = ['A','B','C','D','E','F','G','A♭','B♭','D♭','E♭','G♭','A♯','C♯','D♯','F♯','G♯'];
+        let running = true;
+        let secondsDelay = 1;
+  
+        function getNote(){
+          let	notePos = Math.floor(Math.random() * notes.length);
+          return notes[notePos];
+        }
+        
+        async function streamNotes(){
+          while(running){
+        
+            let noteDiv = document.getElementById('note').setHTML(getNote());
+        
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+            await delay(secondsDelay * 1000); /// waiting
+          }
+        }
+        
+        function start(){
+          running=true;
+          document.getElementById('speed').setHTML(secondsDelay);
+          streamNotes();
+        }
+
+        function stop(){
+          running = false;
+        }
+
+        function faster(){
+          secondsDelay-=0.5;
+          document.getElementById('speed').setHTML(secondsDelay);
+        }
+
+        function slower(){
+          secondsDelay+=0.5;
+          document.getElementById('speed').setHTML(secondsDelay);
+        }
+        
+        window.onload = start;
+        
+        </script>
+        <style>
+          #note {
+            display: grid;
+            height: 300px;
+            width: 100%;
+            font-family: serif;
+            font-size: 7em;
+            text-align: center;
+            align-content: center;
+            vertical-align: middle;
+          }
+          #speedDiv {
+            height: 30px;
+            font-family: serif;
+            font-size: 1em;
+            text-align: center;
+            align-content: center;
+            vertical-align: middle;
+          }
+          </style>
+    </head>
+    <body>
+      <div id="note">
+      </div>
+      <div id="speedDiv">
+        Speed: <label id="speed"></label> seconds
+      </div>  
+      <button onclick="start()">Start</button>
+      <button onclick="stop()">Stop</button>
+      <button onclick="faster()">Faster</button>
+      <button onclick="slower()">Slower</button>
+    </body>
+</html>

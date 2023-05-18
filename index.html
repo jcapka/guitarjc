@@ -42,7 +42,7 @@
         
         function start(){
           running=true;
-          document.getElementById('speed').setHTML(secondsDelay);
+          document.getElementById('speed').innerHTML = secondsDelay;
           streamNotes();
         }
 
@@ -52,12 +52,12 @@
 
         function faster(){
           secondsDelay-=0.5;
-          document.getElementById('speed').setHTML(secondsDelay);
+          document.getElementById('speed').innerHTML = secondsDelay;
         }
 
         function slower(){
           secondsDelay+=0.5;
-          document.getElementById('speed').setHTML(secondsDelay);
+          document.getElementById('speed').innerHTML = secondsDelay;
         }
         
         window.onload = start;

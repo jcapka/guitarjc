@@ -33,7 +33,7 @@
         async function streamNotes(){
           while(running){
         
-            let noteDiv = document.getElementById('note').setHTML(getNote());
+            document.getElementById('note').innerHTML = getNote();
         
             const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
             await delay(secondsDelay * 1000); /// waiting

@@ -1,25 +1,39 @@
-let notes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'A♭', 'B♭', 'D♭', 'E♭', 'G♭', 'A♯', 'C♯', 'D♯', 'F♯', 'G♯'];
+const NOTES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'A♭', 'B♭', 'D♭', 'E♭', 'G♭', 'A♯', 'C♯', 'D♯', 'F♯', 'G♯'];
+const NUM_NOTES = NOTES.length;
+const MAX_DELAY = 10;
+const MIN_DELAY = 0.5;
+
+let SPEED_EL;
+let NOTE_EL; 
+
 let running = true;
 let secondsDelay = 3;
 
+
 function getNote() {
-  let notePos = Math.floor(Math.random() * notes.length);
-  return notes[notePos];
+  let notePos = Math.floor(Math.random() * NUM_NOTES);
+  return NOTES[notePos];
 }
 
 async function streamNotes() {
   while (running) {
 
-    let noteDiv = document.getElementById('note').setHTML(getNote());
+    NOTE_EL.setHTML(getNote());
 
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
     await delay(secondsDelay * 1000); /// waiting
   }
 }
 
+function initialize(){
+  SPEED_EL = document.getElementById('speed');
+  NOTE_EL = document.getElementById('note');
+  start();
+}
+
 function start() {
   running = true;
-  document.getElementById('speed').setHTML(secondsDelay);
+  SPEED_EL.setHTML(secondsDelay);
   streamNotes();
 }
 
@@ -28,13 +42,17 @@ function stop() {
 }
 
 function faster() {
-  secondsDelay -= 0.5;
-  document.getElementById('speed').setHTML(secondsDelay);
+  if(secondsDelay > MIN_DELAY){
+    secondsDelay -= 0.5;  
+  }
+  SPEED_EL.setHTML(secondsDelay);
 }
 
 function slower() {
-  secondsDelay += 0.5;
-  document.getElementById('speed').setHTML(secondsDelay);
+  if(secondsDelay < MAX_DELAY){
+    secondsDelay += 0.5;
+  }
+  SPEED_EL.setHTML(secondsDelay);
 }
 
-window.onload = start;
+window.onload = initialize;
